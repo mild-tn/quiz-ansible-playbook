@@ -1,0 +1,78 @@
+---
+- name: Ping Server
+  hosts: server
+  become: yes
+  tasks:
+   - ping:
+   - name: Install
+     yum:
+      name: 
+        - httpd
+        - mariadb
+        - mariadb-server
+        - php
+        - php-common
+        - php-mysql
+        - php-gd
+        - php-xml
+        - php-mbstring
+        - php-mcrypt
+        - php-xmlrpc
+        - unzip
+        - wget
+        - python
+      state: present
+
+   - name: Start http
+     service:
+       name: httpd
+       state: started
+       enabled: true
+
+   - name: Start mariadb
+     service:
+       name: mariadb
+       state: started
+       enabled: true
+
+   - name: Open firewall
+     firewalld:
+       service: http
+       permanent: yes
+       state: enabled
+       immediate: yes
+
+   - name: Install pip
+     yum:
+       name: python-pip
+       state: present
+
+   - name: Install PyMyQSL
+     pip:
+       name: PyMySQL
+
+   - name: Removes anonymous user account for localhost
+     mysql_user:
+       name: ''
+       host_all: yes
+       state: absent
+
+   - name: Remove root user account for localhost
+     mysql_user:
+       name: root
+       host: localhost
+       state: absent
+
+   - name: Delete database with name 'test'
+     mysql_db:
+       name: test
+       state: absent
+
+   - name: login to connect to server
+     mysql_user:
+       name: root
+       password: abc
+       #login_user: root
+
+   - name: statement SQL
+     

@@ -1,0 +1,2 @@
+[server]
+192.168.52.141 ansible_user=root ansible_password=redhat
