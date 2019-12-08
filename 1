@@ -51,22 +51,9 @@
      pip:
        name: PyMySQL
 
-   - name: Set password root = "abc"
-     mysql_user:
-       name: root
-       password: abc
-       login_user: root
-       login_password: abc
-       state: present
-
    - name: Removes anonymous user account for localhost
      mysql_user:
        name: ''
-       host_all: yes
+       host: serverx
        state: absent
 
-   - name: DROP table test;
-     mysql_db:
-       name: test
-       state: absent
-     

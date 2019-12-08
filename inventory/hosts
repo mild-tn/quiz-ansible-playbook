@@ -1,2 +1,5 @@
 [server]
-192.168.52.141 ansible_user=root ansible_password=redhat
+serverx ansible_user=centos ansible_password=centos
+
+[web]
+labx ansible_user=centos ansible_password=centos
